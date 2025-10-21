@@ -1,0 +1,278 @@
+/* 
+   Picverse - Digital Art Community Platform
+*/
+
+/* ===== Gallery Tags ===== */
+.gallery-tags {
+    padding: 40px 0;
+    background-color: var(--bg-color);
+    text-align: center;
+}
+
+.tags-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.tag-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    background-color: var(--pastel-blue);
+}
+
+.tag-btn:hover {
+    transform: translateY(-3px);
+}
+
+.tag-btn.active {
+    font-weight: 600;
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* ===== Gallery Section ===== */
+.gallery-section {
+    padding: 40px 0;
+    background-color: var(--pastel-blue);
+}
+
+.gallery-section.hidden {
+    display: none;
+}
+
+.tag-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+.artworks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.artwork-card {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.artwork-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(249, 168, 212, 0.15); /* Soft pink shadow */
+}
+
+.artwork-img {
+    height: 200px;
+    overflow: hidden;
+}
+
+.artwork-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.artwork-card:hover .artwork-img img {
+    transform: scale(1.05);
+}
+
+.artwork-info {
+    padding: 15px;
+}
+
+.artwork-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: var(--secondary-color);
+}
+
+.artist {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* ===== Artwork Modal ===== */
+.artwork-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    overflow-y: auto;
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--bg-color);
+    margin: 50px auto;
+    padding: 0;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-image {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color: #000;
+}
+
+.modal-info {
+    padding: 30px;
+}
+
+.modal-info h2 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: var(--secondary-color);
+}
+
+.artwork-stats {
+    display: flex;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+.artwork-stats span {
+    display: flex;
+    align-items: center;
+    color: var(--text-light);
+}
+
+.artwork-stats i {
+    margin-right: 5px;
+    color: var(--secondary-color);
+}
+
+.artwork-description h3,
+.artwork-tags h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    color: var(--primary-color);
+}
+
+.artwork-description p {
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .modal-body {
+        flex-direction: row;
+    }
+    
+    .modal-image {
+        width: 60%;
+        height: auto;
+    }
+    
+    .modal-info {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .modal-image {
+        height: 300px;
+    }
+}
+
+/* ===== Custom Tag Colors for Gallery ===== */
+.gallery-tag-blue {
+    background-color: var(--tag-blue); /* Light blue */
+    color: #4b5563; /* Abu-abu */
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.gallery-tag-yellow {
+    background-color: var(--tag-yellow); /* Light yellow */
+    color: #4b5563; /* Abu-abu */
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.gallery-tag-red {
+    background-color: var(--tag-red); /* Light pink */
+    color: #4b5563; /* Abu-abu */
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+/* Hover effects for each tag */
+.gallery-tag-blue:hover {
+    background-color: #bfdbfe;
+}
+
+.gallery-tag-yellow:hover {
+    background-color: #fde68a;
+}
+
+.gallery-tag-red:hover {
+    background-color: #fda4af;
+}
