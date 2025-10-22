@@ -5,5 +5,6 @@ I’m a Data Science undergraduate student at Binus University with strong passi
 This portfolio showcases my projects and experiences in data preprocessing, visualization, and predictive modeling — built using tools like Python, MySQL, and Power BI.
 
 🌐 Explore my live portfolio here: [lea-portofolio.vercel.app](https://lea-portofolio.vercel.app)
+💻 Check out my complete projects on GitHub: [github.com/leaaudrey17](https://github.com/leaaudrey17)
 
 📧 Feel free to connect or collaborate: lea.audrey1702@gmail.com
