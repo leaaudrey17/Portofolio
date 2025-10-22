@@ -1,0 +1,230 @@
+/* 
+   Picverse - Digital Art Community Platform
+   Community Page Styles - Pastel Pink & Blue Theme
+*/
+
+/* ===== Community Layout ===== */
+.community-layout {
+    padding: 60px 0;
+    background-color: var(--pastel-blue);
+}
+
+.community-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+
+.community-section {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+}
+
+/* ===== Forum Discussions ===== */
+.forum-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.forum-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    background-color: var(--pastel-pink);
+    transition: var(--transition);
+}
+
+.forum-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow);
+}
+
+.forum-info {
+    flex: 1;
+}
+
+.forum-info h3 {
+    margin-bottom: 5px;
+}
+
+.forum-info h3 a {
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.forum-info h3 a:hover {
+    color: var(--secondary-color);
+}
+
+.forum-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.forum-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.forum-meta i {
+    margin-right: 5px;
+}
+
+.forum-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* ===== Recent Activity ===== */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-content p {
+    margin-bottom: 5px;
+}
+
+.activity-time {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* ===== Active Users ===== */
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.user-card {
+    background-color: var(--pastel-pink);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+    text-align: center;
+    padding: 20px;
+}
+
+
+.solid-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--box-shadow);
+  text-transform: uppercase;
+}
+
+.bg-blue    { background-color: #6c8cff; }
+.bg-pink    { background-color: #ff6f91; }
+.bg-green   { background-color: #3ecf8e; }
+.bg-yellow  { background-color: #f9cc5c; }
+.bg-purple  { background-color: #b983ff; }
+.bg-orange  { background-color: #ff9f40; }
+
+.user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow);
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    margin: 0 auto 15px;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-info h3 {
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.user-tagline {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+@media screen and (min-width: 992px) {
+    .community-grid {
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas:
+            "forum activity"
+            "users users";
+    }
+    
+    .forum-discussions {
+        grid-area: forum;
+    }
+    
+    .recent-activity {
+        grid-area: activity;
+    }
+    
+    .active-users {
+        grid-area: users;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .forum-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .forum-action {
+        margin-top: 15px;
+        align-self: flex-end;
+    }
+    
+    .forum-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
