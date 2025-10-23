@@ -1,0 +1,217 @@
+---
+title: "aol"
+output: html_document
+date: "2024-12-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(rjags)
+df <- read.csv("C:/KULIAH/SEMESTER 3/Bayesian Data Analysis/AOL/kc_house_data.csv")
+df
+```
+
+## Data Overview
+We have 21 columns in the dataset, as it follows: 
+
+id - Unique ID for each home sold 
+
+date - Date of the home sale 
+
+price - Price of each home sold 
+
+bedrooms - Number of bedrooms 
+
+bathrooms -  Number of bathrooms, where .5 accounts for a room with a toilet but no shower 
+
+sqft living - Square footage of the apartments interior living space 
+
+sqft lot -  Square footage of the land space 
+
+floors -  Number of floors 
+
+waterfront - A dummy variable for whether the apartment was overlooking the waterfront or not 
+
+view -  An index from 0 to 4 of how good the view of the property was 
+
+condition -  An index from 1 to 5 on the condition of the apartment
+
+grade - An index from 1 to 13, where 1 falls short of building construction and design and 13 have a high quality level of construction and design
+
+sqft above - The square footage of the interior housing space that is above ground level sqft 
+
+basement - The square footage of the interior housing space that is below ground level 
+
+yr built - The year the house was initially built 
+
+yr renovated - The year of the house's last renovation 
+
+zipcode - What zipcode area the house is in 
+
+lat - Lattitude 
+
+long - Longitude 
+
+sqft living15 - The square footage of interior housing living space for the nearest 15 neighbors 
+
+sqft lot15 - The square footage of the land lots of the nearest 15 neighbors
+
+{r}
+library(rjags)
+df <- read.csv("C:/Users/acer/Downloads/Bayesian/kc_house_data.csv")
+head(df)
+
+
+```{r}
+# load covariance (x)
+bed         <- df[,4]
+bath        <- df[,5]
+living      <- df[,6]
+lot         <- df[,7]
+floors      <- df[,8]
+waterfront  <- df[,9]
+view        <- df[,10]
+condition   <- df[,11]
+grade       <- df[,12]
+above       <- df[,13]
+basement    <- df[,14]
+yearbuild   <- df[,15]
+yearrenov   <- df[,16]
+lat         <- df[,18]
+long        <- df[,19]
+living15    <- df[,20]
+lot15       <- df[,21]
+
+price <- as.numeric(df[,3])
+```
+
+```{r}
+# Y as continuous for linear regression
+Y <- log(price)
+```
+
+
+```{r}
+hist(Y, breaks = 30, prob = TRUE, 
+     main = "Histogram of Log-Transformed Price", 
+     xlab = "Log(Price)", col = "lightblue")
+lines(density(Y), col = "red", lwd = 2)
+```
+
+```{r}
+# process X nya
+X <- cbind(bed,bath,living,lot,floors,waterfront,view,condition,grade,above,basement,yearbuild,yearrenov,lat,long,living15,lot15) 
+# combining all features
+names <- c("Intercept","Bedrooms","Bathrooms",
+           "Sqft Living","Sqvt Lot","Floors",
+           "Waterfront","View","Condition","Grade",
+           "Sqft Above","Sqft Basement","Year Built",
+           "Year Renovated", "Lattitude", "Longtitude",
+           "Sqft Living 15 Neighboor","Sqft Lot 15 Neighboor")
+```
+
+```{r}
+# remove missing data
+junk <- is.na(rowSums(X))
+Y <- Y[!junk]
+X <- X[!junk,]
+```
+
+```{r}
+# standardize the covariates
+X <- as.matrix(scale(X))
+```
+
+## Bayesian Linear Regression: Uninformative Gaussian
+```{r}
+# fit into jag
+n <- length(Y)
+p <- ncol(X) 
+data <- list(Y=Y,X=X,n=n,p=p)
+params <- c("beta0","beta1") 
+burn <- 10000
+n.iter <- 20000
+n.chains <- 1 
+```
+
+```{r}
+model_string <- textConnection("model{
+   # Likelihood
+    for(i in 1:n){
+      Y[i] ~ dnorm(alpha+inprod(X[i,],beta[]),taue)
+    }
+   # Priors
+    for(j in 1:p){
+      beta[j] ~ dnorm(0,0.001)
+    }
+    alpha ~ dnorm(0,0.001)
+    taue  ~ dgamma(0.1, 0.1)
+ }")
+```
+
+```{r}
+model <- jags.model(model_string,data = data, n.chains=n.chains,quiet=TRUE)
+update(model, burn, progress.bar="none")
+samples <- coda.samples(model, variable.names=params, n.iter=n.iter, progress.bar="none")
+```
+
+```{r}
+par(mar = c(2, 2, 2, 2))
+plot(samples)
+sum <- summary(samples)
+rownames(sum$statistics) <- names
+rownames(sum$quantiles) <- names
+```
+
+```{r}
+sum
+```
+
+
+## Bayesian Logistic Regression
+```{r}
+# y as binary for logistic regression (price > median price)
+median_price <- median(homes$price, na.rm = TRUE)
+Y_binary <- ifelse(homes$price > median_price, 1, 0)
+```
+
+
+## Bayesian Beta Regression
+```{r}
+OTU <- as.matrix(OTU)
+Y_prob <- apply(y,1,max)/rowSums(OTU)
+X <- cbind(bed,bath,living,lot,floors,waterfront,view,condition,grade,above,basement,yearbuild,yearrenov,lat,long,living15,lot15) 
+# combining all features
+names <- c("Intercept","Bedrooms","Bathrooms",
+           "Sqft Living","Sqvt Lot","Floors",
+           "Waterfront","View","Condition","Grade",
+           "Sqft Above","Sqft Basement","Year Built",
+           "Year Renovated", "Lattitude", "Longtitude",
+           "Sqft Living 15 Neighboor","Sqft Lot 15 Neighboor")
+```
+
+# Standardizde the covariates  
+```{r}
+# mean = 0, sd = 1 
+X <- as.matrix(scale(X))
+X <- cbind(1,X) #add the intercept
+colnames(X) <- names
+```
+
+
+# fit in beta 
+```{r}
+model{
+  for(i in 1:n){
+    Y[i] ~ dbeta(r * mu[i], r * (1 - mu[i]))
+    logit(mu[i]) <- inprod(X[i,], beta[])
+  }
+  for(j in 1:p){beta[j] ~ dnorm(0, 0.01)}
+  r ~ dgamma(0.1, 0.1)
+}
+
+```
+
